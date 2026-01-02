@@ -1,8 +1,11 @@
-# Ignore the large model file
+# --- Generated Model & Results (Ignore these) ---
 model.pkl
+predictions.csv
+importance.csv
+processed_test_history.csv
 
-# Ignore python cache files
-__pycache__/
-*.pyc
+# --- System & Environment (Ignore these) ---
 venv/
+__pycache__/
 .idea/
+*.pyc
