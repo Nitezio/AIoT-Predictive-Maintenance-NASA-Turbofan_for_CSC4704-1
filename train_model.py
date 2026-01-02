@@ -75,7 +75,8 @@ def main():
     test_last = test_processed.groupby('unit').last().reset_index()
 
     # Add RUL targets
-    train_final, test_final = prepare_rul(train_processed, test_df, truth_df)
+    # --- FIX WAS APPLIED HERE: Passed 'test_processed' instead of 'test_df' ---
+    train_final, test_final = prepare_rul(train_processed, test_processed, truth_df)
 
     # Define features (Raw sensors + Engineered rolling features)
     features = SELECTED_SENSORS + [f'{c}_mean' for c in SELECTED_SENSORS] + [f'{c}_std' for c in SELECTED_SENSORS]

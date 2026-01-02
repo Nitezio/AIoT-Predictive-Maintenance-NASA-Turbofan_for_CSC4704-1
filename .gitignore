@@ -1,0 +1,8 @@
+# Ignore the large model file
+model.pkl
+
+# Ignore python cache files
+__pycache__/
+*.pyc
+venv/
+.idea/
