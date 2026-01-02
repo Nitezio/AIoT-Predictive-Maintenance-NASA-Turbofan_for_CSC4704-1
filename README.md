@@ -184,11 +184,6 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 
 ---
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 ## 👥 Authors
 
@@ -213,12 +208,5 @@ Project Link: [https://github.com/Nitezio/AIoT-Predictive-Maintenance-NASA-Turbo
 
 **Note**: This project is developed for educational purposes as part of the CSC4704-1 course curriculum.
 
-## 📚 References
-
-1. Saxena, A., & Goebel, K. (2008). "Turbofan Engine Degradation Simulation Data Set", NASA Ames Prognostics Data Repository
-2. Zheng, S., et al. (2017). "Long Short-Term Memory Network for Remaining Useful Life estimation"
-3. Babu, G. S., et al. (2016). "Deep Convolutional Neural Network Based Regression Approach for Estimation of Remaining Useful Life"
-
----
 
 ⭐ **If you find this project helpful, please star the repository!**
