@@ -22,6 +22,26 @@ This project implements an **AI-powered Internet of Things (AIoT)** solution for
 - 📈 **Visualization**: Comprehensive data analysis and result visualization
 - 🔄 **Scalable Architecture**: Modular design for easy deployment and scaling
 
+## 📁 Project Structure
+
+```
+AIoT-Predictive-Maintenance-NASA-Turbofan/
+├── data/                      # Dataset files
+├── models/                    # Saved models
+├── notebooks/                 # Jupyter notebooks
+│   ├── EDA.ipynb             # Exploratory Data Analysis
+│   └── Model_Development.ipynb
+├── src/                       # Source code
+│   ├── data_preprocessing.py
+│   ├── train_model.py
+│   ├── predict.py
+│   └── visualize_results.py
+├── results/                   # Output plots and metrics
+├── requirements.txt           # Python dependencies
+├── README.md                  # Project documentation
+└── LICENSE                    # MIT License
+```
+
 ## 🗂️ Dataset
 
 The project uses the **NASA Commercial Modular Aero-Propulsion System Simulation (C-MAPSS)** dataset:
@@ -77,7 +97,7 @@ Matplotlib
 Seaborn
 ```
 
-### Installation
+### How to setup
 
 1. **Clone the repository**
    ```bash
@@ -189,26 +209,6 @@ Non-trainable params: 0
 - Real-time sensor data ingestion
 - Stream processing capabilities
 - Alert system for critical RUL thresholds
-
-## 📁 Project Structure
-
-```
-AIoT-Predictive-Maintenance-NASA-Turbofan/
-├── data/                      # Dataset files
-├── models/                    # Saved models
-├── notebooks/                 # Jupyter notebooks
-│   ├── EDA.ipynb             # Exploratory Data Analysis
-│   └── Model_Development.ipynb
-├── src/                       # Source code
-│   ├── data_preprocessing.py
-│   ├── train_model.py
-│   ├── predict.py
-│   └── visualize_results.py
-├── results/                   # Output plots and metrics
-├── requirements.txt           # Python dependencies
-├── README.md                  # Project documentation
-└── LICENSE                    # MIT License
-```
 
 ## 🎯 Future Enhancements
 
