@@ -1,224 +1,171 @@
-# AIoT Predictive Maintenance - NASA Turbofan Engine Dataset
+# 🛡️ AIoT Predictive Maintenance System
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
-[![Scikit-learn](https://img.shields.io/badge/Scikit--learn-Machine%20Learning-F7931E?style=flat&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?style=flat&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
-[![NumPy](https://img.shields.io/badge/NumPy-Scientific%20Computing-013243?style=flat&logo=numpy&logoColor=white)](https://numpy.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io/)
-[![Matplotlib](https://img.shields.io/badge/Matplotlib-Visualization-11557c?style=flat)](https://matplotlib.org/)
-[![Seaborn](https://img.shields.io/badge/Seaborn-Statistical%20Viz-3776AB?style=flat)](https://seaborn.pydata.org/)
-[![Status](https://img.shields.io/badge/Status-Active-success.svg)]()
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.52+-FF4B4B.svg)](https://streamlit.io/)
+[![ML](https://img.shields.io/badge/ML-Scikit--learn-orange.svg)](https://scikit-learn.org/)
 
-## 📋 Project Overview
+### CSC4704 Group Project | Topic 4: Predictive Maintenance using Industrial IoT Data
+**Dataset:** NASA C-MAPSS FD001 | **Model:** Random Forest Regressor
 
-This project implements an **AI-powered Internet of Things (AIoT)** solution for predictive maintenance of turbofan engines using the NASA C-MAPSS dataset. The system combines deep learning models with IoT sensor data to predict Remaining Useful Life (RUL) of aircraft engines, enabling proactive maintenance and reducing operational costs.
+## 📖 Project Overview
+
+This project implements an end-to-end **Predictive Maintenance Pipeline** for commercial turbofan engines. By analyzing sensor data from the **NASA C-MAPSS FD001 dataset**, the system predicts the **Remaining Useful Life (RUL)** of engines. This allows maintenance teams to schedule repairs proactively, preventing catastrophic failures and optimizing operational costs.
 
 ### Key Features
 
-- 🔮 **Predictive Analytics**: LSTM-based deep learning model for RUL prediction
-- 📊 **Real-time Monitoring**: IoT sensor data integration and analysis
-- 🎯 **High Accuracy**: Achieves strong performance metrics on NASA dataset
-- 📈 **Visualization**: Comprehensive data analysis and result visualization
-- 🔄 **Scalable Architecture**: Modular design for easy deployment and scaling
+* **🤖 Machine Learning:** Random Forest Regressor trained on 100 run-to-failure engine trajectories.
+* **⚙️ Feature Engineering:** Rolling statistics (mean, std) to capture temporal degradation patterns.
+* **📊 Interactive Dashboard:** Streamlit-based web interface for real-time visualization of fleet health.
+* **🛠️ Maintenance Insights:** Automated "Critical/Warning/Healthy" status classification based on RUL thresholds.
 
-## 📁 Project Structure
+---
 
-```
-AIoT-Predictive-Maintenance-NASA-Turbofan/
-├── data/                      # Dataset files
-├── models/                    # Saved models
-├── notebooks/                 # Jupyter notebooks
-│   ├── EDA.ipynb             # Exploratory Data Analysis
-│   └── Model_Development.ipynb
-├── src/                       # Source code
-│   ├── data_preprocessing.py
-│   ├── train_model.py
-│   ├── predict.py
-│   └── visualize_results.py
-├── results/                   # Output plots and metrics
-├── requirements.txt           # Python dependencies
-├── README.md                  # Project documentation
-└── LICENSE                    # MIT License
-```
+## 📂 Directory Structure
 
-## 🗂️ Dataset
+This repository is organized to separate source code, data, and generated artifacts.
 
-The project uses the **NASA Commercial Modular Aero-Propulsion System Simulation (C-MAPSS)** dataset:
-
-- **Source**: NASA Prognostics Data Repository
-- **Description**: Run-to-failure simulation data from turbofan engines
-- **Sensors**: 21 sensor measurements per time cycle
-- **Operating Conditions**: 3 operational settings
-- **Scenarios**: Multiple fault modes and conditions
-
-### Dataset Structure
-
-```
-data/
-├── train_FD001.txt    # Training data
-├── test_FD001.txt     # Test data
-└── RUL_FD001.txt      # Ground truth RUL values
+```text
+AIoT-Predictive-Maintenance/
+│
+├── dashboard.py               # 📊 Interactive Web Dashboard (Streamlit)
+├── train_model.py             # 🧠 Main AI Pipeline (Data Processing -> Training -> Evaluation)
+├── requirements.txt           # 📦 List of Python dependencies
+├── README.md                  # 📄 Project Documentation (You are here)
+├── .gitignore                 # 🚫 Excludes CSVs and Model files
+│
+├── data/                      # 🗄️ Raw Dataset Directory
+│   ├── train_FD001.txt        # Training Data (Run-to-failure)
+│   ├── test_FD001.txt         # Test Data (Truncated history)
+│   └── RUL_FD001.txt          # Ground Truth RUL for Test Data
+│
+└── [Generated Locally]        # Generated by train_model.py (Not in Git)
+    ├── model.pkl
+    ├── predictions.csv
+    ├── importance.csv
+    └── processed_test_history.csv
 ```
 
-## 🏗️ System Architecture
+---
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                   AIoT System Architecture               │
-├─────────────────────────────────────────────────────────┤
-│                                                          │
-│  IoT Layer          Processing Layer      AI Layer      │
-│  ┌──────────┐      ┌──────────────┐    ┌──────────┐   │
-│  │ Sensors  │ ───> │ Data Pipeline│───>│ LSTM     │   │
-│  │ - Temp   │      │ - Cleaning   │    │ Model    │   │
-│  │ - Press  │      │ - Features   │    │          │   │
-│  │ - Speed  │      │ - Normalize  │    └──────────┘   │
-│  └──────────┘      └──────────────┘          │         │
-│                                               v         │
-│                                      ┌──────────────┐   │
-│                                      │ Predictions  │   │
-│                                      │ (RUL Output) │   │
-│                                      └──────────────┘   │
-└─────────────────────────────────────────────────────────┘
-```
+## 🚀 Installation & Setup
 
-## 🚀 Getting Started
+Follow these steps to set up the environment and run the system.
 
-### Prerequisites
+### 1. Clone the Repository
 
 ```bash
-Python 3.8+
-TensorFlow 2.x
-NumPy
-Pandas
-Scikit-learn
-Matplotlib
-Seaborn
+git clone https://github.com/Nitezio/AIoT-Predictive-Maintenance-NASA-Turbofan_for_CSC4704-1.git
+cd AIoT-Predictive-Maintenance-NASA-Turbofan_for_CSC4704-1
 ```
 
-### How to setup
+### 2. Install Dependencies
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Nitezio/AIoT-Predictive-Maintenance-NASA-Turbofan_for_CSC4704-1.git
-   cd AIoT-Predictive-Maintenance-NASA-Turbofan_for_CSC4704-1
-   ```
+Ensure you have Python 3.8+ installed. It is recommended to use a virtual environment.
 
-2. **Create virtual environment** (recommended)
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+```bash
+# Create virtual environment (optional but recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Download dataset**
-   - Download NASA C-MAPSS dataset from [NASA Prognostics Repository](https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/)
-   - Place files in `data/` directory
-
-## 💻 Usage
-
-### 1. Data Preprocessing
-
-```python
-python src/data_preprocessing.py
+# Install required packages
+pip install -r requirements.txt
 ```
 
-This script:
-- Loads raw sensor data
-- Performs data cleaning and normalization
-- Engineers relevant features
-- Splits data into train/validation/test sets
+### 3. Train the AI Model (⚠️ MANDATORY)
 
-### 2. Model Training
+You must run the training script first. The dashboard relies on CSV files (`predictions.csv`, etc.) that are generated by this script. These files are excluded from the repository via `.gitignore` to keep the repo clean.
 
-```python
-python src/train_model.py
+```bash
+python train_model.py
 ```
 
-Features:
-- LSTM-based architecture
-- Early stopping and model checkpointing
-- Training history visualization
-- Model performance evaluation
+**✅ What happens when you run this?** The script will process the raw data in `data/`, train the Random Forest model, and generate the following files in your root directory:
 
-### 3. Making Predictions
+- `model.pkl`: The saved trained model file.
+- `predictions.csv`: Model predictions vs. Actual RUL for the test set.
+- `importance.csv`: Feature importance rankings.
+- `processed_test_history.csv`: Processed time-series data for plotting.
 
-```python
-python src/predict.py --model models/best_model.h5 --data data/test_FD001.txt
+### 4. Launch the Dashboard
+
+Once the model is trained and files are generated, start the visual interface:
+
+```bash
+streamlit run dashboard.py
 ```
 
-### 4. Visualization
+Your browser will automatically open the dashboard at `http://localhost:8501`.
 
-```python
-python src/visualize_results.py
-```
+---
 
-Generates:
-- Training/validation loss curves
-- Prediction vs actual RUL plots
-- Sensor data correlation heatmaps
-- Error distribution analysis
+## 🖥️ Dashboard Walkthrough
 
-## 📊 Model Architecture
+The dashboard is divided into five key sections:
 
-```python
-Model: LSTM-based Sequence Predictor
-_________________________________________________________________
-Layer (type)                 Output Shape              Param #   
-=================================================================
-lstm_1 (LSTM)               (None, 50, 100)           44400     
-dropout_1 (Dropout)         (None, 50, 100)           0         
-lstm_2 (LSTM)               (None, 50)                30200     
-dropout_2 (Dropout)         (None, 50)                0         
-dense_1 (Dense)             (None, 50)                2550      
-dense_2 (Dense)             (None, 1)                 51        
-=================================================================
-Total params: 77,201
-Trainable params: 77,201
-Non-trainable params: 0
-```
+### 1️⃣ Overview & Performance
+View high-level model metrics (MAE, RMSE) and dataset details.
 
-## 📈 Performance Metrics
+### 2️⃣ Data Insights
+Explore sensor correlations via heatmaps to understand data redundancy and relationships between sensors.
 
-| Metric | Value |
-|--------|-------|
-| RMSE | ~18-22 cycles |
-| MAE | ~15-18 cycles |
-| R² Score | ~0.75-0.85 |
-| Training Time | ~15-20 min (GPU) |
+### 3️⃣ Predictions Analysis
+Compare Predicted RUL vs. Actual RUL to assess model accuracy across the entire test fleet.
 
-## 🔍 Key Components
+### 4️⃣ Unit Specific Analysis
+Deep dive into individual engines. Select a Unit ID to visualize its specific sensor degradation path over time and see how sensor readings evolve as the engine approaches failure.
+
+### 5️⃣ Maintenance Insights
+- **Fleet Status Board:** Instantly see which engines are CRITICAL (<20 cycles), WARNING (<50 cycles), or HEALTHY.
+- **Actionable List:** A table allowing engineers to prioritize the most critical units.
+- **Feature Importance:** Technical breakdown of which sensors (e.g., Sensor 11 Std Dev) are driving the AI's predictions.
+
+---
+
+## 🛠️ Technical Details
 
 ### Data Preprocessing
-- **Normalization**: Min-Max scaling for sensor readings
-- **Feature Engineering**: Rolling statistics, degradation indicators
-- **Sequence Generation**: Time-window based sequences for LSTM
+- **Sensor Selection:** We focus on sensors 2, 3, 4, 7, 11, and 15, which show the strongest correlation with engine degradation in the FD001 dataset.
+- **Rolling Windows:** To capture the rate of change, we compute rolling means and standard deviations (window size = 5) for these sensors.
 
-### Model Features
-- **Architecture**: Stacked LSTM layers with dropout
-- **Optimizer**: Adam with learning rate scheduling
-- **Loss Function**: Mean Squared Error (MSE)
-- **Regularization**: Dropout and early stopping
+### Modeling Strategy
+- **Algorithm:** Random Forest Regressor (Ensemble learning approach).
+- **RUL Clipping:** The target RUL is clipped at 125 cycles. This "Piecewise Linear" approach teaches the model that new engines have a constant "healthy" phase before linear degradation begins.
 
-### IoT Integration
-- Real-time sensor data ingestion
-- Stream processing capabilities
-- Alert system for critical RUL thresholds
+---
 
-## 🎯 Future Enhancements
+## 📊 Dataset Information
 
-- [ ] Multi-engine parallel prediction
-- [ ] Real-time dashboard with Flask/Streamlit
-- [ ] Transfer learning for different engine types
-- [ ] Integration with cloud IoT platforms (AWS IoT, Azure IoT)
-- [ ] Ensemble methods (LSTM + CNN)
-- [ ] Uncertainty quantification
-- [ ] Mobile application for maintenance alerts
+### NASA C-MAPSS FD001 Dataset
+
+- **Source:** [NASA Prognostics Data Repository](https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/)
+- **Description:** The dataset contains simulated run-to-failure data for turbofan engines under one operational condition and one fault mode.
+
+**Data Structure:**
+- **Training Set:** 100 engines, complete run-to-failure trajectories.
+- **Test Set:** 100 engines, truncated at random points before failure.
+- **Sensors:** 21 sensor channels measuring temperature, pressure, speed, etc.
+- **Operating Conditions:** 3 channels (altitude, throttle, etc.).
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Error: `FileNotFoundError: [Errno 2] No such file or directory: 'predictions.csv'`**
+- **Cause:** You did not run `train_model.py` before starting the dashboard.
+- **Solution:** Stop the dashboard (Ctrl+C) and run `python train_model.py`.
+
+**Error: `FileNotFoundError: data/train_FD001.txt not found`**
+- **Cause:** The raw dataset files are missing.
+- **Solution:** Ensure the `data/` folder exists and contains the NASA dataset files.
+
+**Dashboard shows no data**
+- Check that `predictions.csv`, `importance.csv`, and `processed_test_history.csv` exist in the root directory.
+
+---
 
 ## 🤝 Contributing
 
@@ -230,20 +177,28 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+---
+
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
 
 ## 👥 Authors
 
 - **Nitezio** - *Initial work* - [GitHub Profile](https://github.com/Nitezio)
 
+---
+
 ## 🙏 Acknowledgments
 
 - NASA Prognostics Center of Excellence for providing the C-MAPSS dataset
 - CSC4704-1 Course Staff and Faculty
-- TensorFlow and Keras teams for excellent deep learning frameworks
+- Scikit-learn and Streamlit teams for excellent machine learning and visualization frameworks
 - Open-source community for various tools and libraries
+
+---
 
 ## 📧 Contact
 
@@ -261,4 +216,4 @@ Project Link: [https://github.com/Nitezio/AIoT-Predictive-Maintenance-NASA-Turbo
 
 ---
 
-⭐ **Star this repository** if you find it helpful!
+⭐ **If you find this project helpful, please star the repository!**
