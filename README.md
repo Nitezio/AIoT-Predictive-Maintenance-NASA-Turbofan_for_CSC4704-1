@@ -1,212 +1,100 @@
-# 🛡️ AIoT Predictive Maintenance System
+# 🛡️ VHACK 2026: Resilient AIoT Predictive Maintenance for ASEAN SMEs
 
+[![Track](https://img.shields.io/badge/VHACK-Track%201-blue.svg)](https://vhack.usm.my/)
+[![SDG 9](https://img.shields.io/badge/SDG-9-orange.svg)](https://sdgs.un.org/goals/goal9)
+[![Status](https://img.shields.io/badge/Status-Hackathon%20Upgrade-success.svg)]()
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
-[![Scikit-learn](https://img.shields.io/badge/Scikit--learn-Machine%20Learning-F7931E?style=flat&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?style=flat&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
-[![NumPy](https://img.shields.io/badge/NumPy-Scientific%20Computing-013243?style=flat&logo=numpy&logoColor=white)](https://numpy.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io/)
-[![Matplotlib](https://img.shields.io/badge/Matplotlib-Visualization-11557c?style=flat)](https://matplotlib.org/)
-[![Seaborn](https://img.shields.io/badge/Seaborn-Statistical%20Viz-3776AB?style=flat)](https://seaborn.pydata.org/)
-[![Status](https://img.shields.io/badge/Status-Active-success.svg)]()
-
-### CSC4704 Group Project | Topic 4: Predictive Maintenance using Industrial IoT Data
-**Dataset:** NASA C-MAPSS FD001 | **Model:** Random Forest Regressor
-
-## 📖 Project Overview
-
-This project implements an end-to-end **Predictive Maintenance Pipeline** for commercial turbofan engines. By analyzing sensor data from the **NASA C-MAPSS FD001 dataset**, the system predicts the **Remaining Useful Life (RUL)** of engines. This allows maintenance teams to schedule repairs proactively, preventing catastrophic failures and optimizing operational costs.
-
-### Key Features
-
-* **🤖 Machine Learning:** Random Forest Regressor trained on 100 run-to-failure engine trajectories.
-* **⚙️ Feature Engineering:** Rolling statistics (mean, std) to capture temporal degradation patterns.
-* **📊 Interactive Dashboard:** Streamlit-based web interface for real-time visualization of fleet health.
-* **🛠️ Maintenance Insights:** Automated "Critical/Warning/Healthy" status classification based on RUL thresholds.
+### 🏆 Varsity Hackathon 2026 Submission
+**Case Study 1:** Predictive Maintenance for SME Resilience  
+**Primary Goal:** SDG 9: Industry, Innovation, and Infrastructure (Target 9.4)
 
 ---
 
-## 📂 Directory Structure
+## 📖 Executive Summary
 
-This repository is organized to separate source code, data, and generated artifacts.
+Small and Medium Enterprises (SMEs) are the backbone of the ASEAN economy, yet they often struggle with aging machinery and reactive maintenance cultures. A single motor failure in a rural food processing plant can halt production for weeks. 
+
+Our **VHACK AIoT Command Center** transitions predictive maintenance from a luxury for conglomerates into a robust, resilient tool for local SMEs. By using advanced ML with **Anomaly Change-Point Detection** and **Explainable AI (XAI)**, we provide factory managers with clear, actionable insights to prevent downtime and optimize resource usage.
+
+### 🌟 Key Hackathon Enhancements
+
+*   **🔍 Anomaly Change-Point Detection:** Implemented `ruptures` (Pelt algorithm) to identify the exact moment a machine transitions from "Healthy" to "Impaired", allowing for earlier intervention.
+*   **🧠 Explainable AI (SHAP):** Local interpretability module that explains *why* the AI predicts a failure, building trust with non-technical operators.
+*   **🛡️ SME Resilience Engine:** Robust data imputation (Forward-fill/Backward-fill) to handle noisy or missing sensor data common in industrial settings.
+*   **🛠️ Proactive Maintenance Scheduler:** Automated work-order generation and "Time-to-Failure" conversions (Cycles to Hours) for real-world usability.
+*   **🌍 Multi-lingual Accessibility:** Localized alerts (e.g., Malay) to ensure inclusivity in local factory environments.
+
+---
+
+## 📂 Architecture
 
 ```text
-AIoT-Predictive-Maintenance/
+Group_Project_Topic4/
 │
-├── dashboard.py               # 📊 Interactive Web Dashboard (Streamlit)
-├── train_model.py             # 🧠 Main AI Pipeline (Data Processing -> Training -> Evaluation)
-├── requirements.txt           # 📦 List of Python dependencies
-├── README.md                  # 📄 Project Documentation (You are here)
-├── .gitignore                 # 🚫 Excludes CSVs and Model files
+├── dashboard.py               # 📊 VHACK Command Center (Streamlit + SHAP + Scheduler)
+├── train_model.py             # 🧠 AI Engine (Change-Point + XAI Explainer + Robust Imputation)
+├── requirements.txt           # 📦 Updated dependencies (shap, ruptures)
+├── README.md                  # 📄 Hackathon Pitch & Documentation
 │
-├── data/                      # 🗄️ Raw Dataset Directory
-│   ├── train_FD001.txt        # Training Data (Run-to-failure)
-│   ├── test_FD001.txt         # Test Data (Truncated history)
-│   └── RUL_FD001.txt          # Ground Truth RUL for Test Data
+├── data/                      # 🗄️ NASA C-MAPSS FD001 Dataset
+│   ├── train_FD001.txt        
+│   ├── test_FD001.txt         
+│   └── RUL_FD001.txt          
 │
-└── [Generated Locally]        # Generated by train_model.py (Not in Git)
+└── artifacts/                 # Generated locally (Excluded from Git)
     ├── model.pkl
-    ├── predictions.csv
-    ├── importance.csv
-    └── processed_test_history.csv
+    ├── shap_explainer.pkl     # XAI Explainer
+    ├── processed_test_history.csv
+    └── predictions.csv
 ```
 
 ---
 
-## 🚀 Installation & Setup
+## 🚀 Getting Started
 
-Follow these steps to set up the environment and run the system.
-
-### 1. Clone the Repository
-
+### 1. Install Dependencies
 ```bash
-git clone https://github.com/Nitezio/AIoT-Predictive-Maintenance-NASA-Turbofan_for_CSC4704-1.git
-cd AIoT-Predictive-Maintenance-NASA-Turbofan_for_CSC4704-1
-```
-
-### 2. Install Dependencies
-
-Ensure you have Python 3.8+ installed. It is recommended to use a virtual environment.
-
-```bash
-# Create virtual environment (optional but recommended)
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install required packages
 pip install -r requirements.txt
 ```
 
-### 3. Train the AI Model (⚠️ MANDATORY)
-
-You must run the training script first. The dashboard relies on CSV files (`predictions.csv`, etc.) that are generated by this script. These files are excluded from the repository via `.gitignore` to keep the repo clean.
-
+### 2. Run the AI Engine (Mandatory)
+This script trains the model, detects change-points, and generates the XAI explainer.
 ```bash
 python train_model.py
 ```
 
-**✅ What happens when you run this?** The script will process the raw data in `data/`, train the Random Forest model, and generate the following files in your root directory:
-
-- `model.pkl`: The saved trained model file.
-- `predictions.csv`: Model predictions vs. Actual RUL for the test set.
-- `importance.csv`: Feature importance rankings.
-- `processed_test_history.csv`: Processed time-series data for plotting.
-
-### 4. Launch the Dashboard
-
-Once the model is trained and files are generated, start the visual interface:
-
+### 3. Launch the VHACK Command Center
 ```bash
 streamlit run dashboard.py
 ```
 
-Your browser will automatically open the dashboard at `http://localhost:8501`.
+---
+
+## 🛠️ Technical Feasibility & Constraints
+
+### Noisy Data Handling
+Unlike standard models that drop missing values, our pipeline uses a time-series-aware imputation strategy. This ensures that even if an IoT sensor drops out for 5 cycles, the model retains the degradation context.
+
+### Model Interpretability (XAI)
+Using **SHAP (SHapley Additive exPlanations)**, the dashboard provides a waterfall plot for every engine. If the RUL is low, the AI explicitly states: *"Sensor 11 volatility is the primary driver for this maintenance alert."*
+
+### Scalability
+The core model is a Random Forest Regressor, chosen for its lightweight nature. It can be deployed on edge devices like Raspberry Pi or low-cost industrial gateways, making it ideal for budget-constrained SMEs.
 
 ---
 
-## 🖥️ Dashboard Walkthrough
+## 🌍 Social Impact (SDG 9.4)
 
-The dashboard is divided into five key sections:
-
-### 1️⃣ Overview & Performance
-View high-level model metrics (MAE, RMSE) and dataset details.
-
-### 2️⃣ Data Insights
-Explore sensor correlations via heatmaps to understand data redundancy and relationships between sensors.
-
-### 3️⃣ Predictions Analysis
-Compare Predicted RUL vs. Actual RUL to assess model accuracy across the entire test fleet.
-
-### 4️⃣ Unit Specific Analysis
-Deep dive into individual engines. Select a Unit ID to visualize its specific sensor degradation path over time and see how sensor readings evolve as the engine approaches failure.
-
-### 5️⃣ Maintenance Insights
-- **Fleet Status Board:** Instantly see which engines are CRITICAL (<20 cycles), WARNING (<50 cycles), or HEALTHY.
-- **Actionable List:** A table allowing engineers to prioritize the most critical units.
-- **Feature Importance:** Technical breakdown of which sensors (e.g., Sensor 11 Std Dev) are driving the AI's predictions.
+By 2030, upgrade infrastructure and retrofit industries to make them sustainable. Our solution:
+1.  **Reduces Waste:** Prevents "over-maintenance" (replacing parts too early).
+2.  **Prevents Bankruptcy:** Minimizes catastrophic downtime for thin-margin SMEs.
+3.  **Local Empowerment:** Multi-lingual alerts bridge the gap between advanced AI and local workforce skills.
 
 ---
-
-## 🛠️ Technical Details
-
-### Data Preprocessing
-- **Sensor Selection:** We focus on sensors 2, 3, 4, 7, 11, and 15, which show the strongest correlation with engine degradation in the FD001 dataset.
-- **Rolling Windows:** To capture the rate of change, we compute rolling means and standard deviations (window size = 5) for these sensors.
-
-### Modeling Strategy
-- **Algorithm:** Random Forest Regressor (Ensemble learning approach).
-- **RUL Clipping:** The target RUL is clipped at 125 cycles. This "Piecewise Linear" approach teaches the model that new engines have a constant "healthy" phase before linear degradation begins.
-
----
-
-## 📊 Dataset Information
-
-### NASA C-MAPSS FD001 Dataset
-
-- **Source:** [NASA Prognostics Data Repository](https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/)
-- **Description:** The dataset contains simulated run-to-failure data for turbofan engines under one operational condition and one fault mode.
-
-**Data Structure:**
-- **Training Set:** 100 engines, complete run-to-failure trajectories.
-- **Test Set:** 100 engines, truncated at random points before failure.
-- **Sensors:** 21 sensor channels measuring temperature, pressure, speed, etc.
-- **Operating Conditions:** 3 channels (altitude, throttle, etc.).
-
----
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**Error: `FileNotFoundError: [Errno 2] No such file or directory: 'predictions.csv'`**
-- **Cause:** You did not run `train_model.py` before starting the dashboard.
-- **Solution:** Stop the dashboard (Ctrl+C) and run `python train_model.py`.
-
-**Error: `FileNotFoundError: data/train_FD001.txt not found`**
-- **Cause:** The raw dataset files are missing.
-- **Solution:** Ensure the `data/` folder exists and contains the NASA dataset files.
-
-**Dashboard shows no data**
-- Check that `predictions.csv`, `importance.csv`, and `processed_test_history.csv` exist in the root directory.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
 
 ## 👥 Authors
-
-- **Nitezio** - *Initial work* - [GitHub Profile](https://github.com/Nitezio)
-
----
-
-## 🙏 Acknowledgments
-
-- NASA Prognostics Center of Excellence for providing the C-MAPSS dataset
-- CSC4704-1 Course Staff and Faculty
-- Scikit-learn and Streamlit teams for excellent machine learning and visualization frameworks
-- Open-source community for various tools and libraries
+- **Nitezio** - *Project Lead*
+- **Gemini CLI** - *Lead Architect & Implementation*
 
 ---
-
-## 📧 Contact
-
-Project Link: [https://github.com/Nitezio/AIoT-Predictive-Maintenance-NASA-Turbofan_for_CSC4704-1](https://github.com/Nitezio/AIoT-Predictive-Maintenance-NASA-Turbofan_for_CSC4704-1)
-
----
-
-**Note**: This project is developed for educational purposes as part of the CSC4704-1 course curriculum.
-
-
-⭐ **If you find this project helpful, please star the repository!**
+⭐ **Submission for USM Varsity Hackathon 2026**
