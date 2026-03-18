@@ -25,6 +25,14 @@ Our **VHACK AIoT Command Center (v2.0)** transitions predictive maintenance from
 *   **🛡️ High-Dependability AI Engine:** Utilizes `HistGradientBoosting` with **Sample Weighting**, prioritizing accuracy during the critical end-of-life phase (0-30 cycles).
 *   **⚠️ SME Safety Buffer:** A built-in "Pessimistic Bias" that intentionally predicts failure slightly earlier than expected to ensure a safety cushion for maintenance planning.
 *   **🌍 Multi-lingual Accessibility:** Localized alerts in **Bahasa Melayu** to ensure floor workers can react instantly to critical failures.
+*   ## 🚀 Enterprise-Grade Enhancements (VHACK 2026)
+
+To meet the high-dependability needs of ASEAN SMEs, we have integrated the following "Smart Factory" modules:
+
+* **💬 Agentic AI Co-Pilot:** A context-aware maintenance assistant that explains RUL predictions and identifies critical units in natural language.
+* **🛡️ AI API Rate Limiting:** Built-in safeguards (10 requests/min) to prevent system overload and maintain predictable cloud operational costs for SMEs.
+* **📅 Digital Ticketing System:** A full maintenance workflow allowing managers to assign technicians to critical units and track resolution history.
+* **🛠️ Developer Admin Panel:** High-level oversight for sensor calibration and manual "Tolak Value" (offset) corrections to handle faulty hardware telemetry.
 
 ---
 
