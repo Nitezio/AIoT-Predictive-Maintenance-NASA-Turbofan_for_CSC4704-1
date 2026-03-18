@@ -85,10 +85,4 @@ streamlit run dashboard.py
 ```
 
 ---
-
-## 👥 Authors
-- **Nitezio** - *Project Lead*
-- **Gemini CLI** - *Lead Architect & Implementation*
-
----
 ⭐ **Official Submission for USM Varsity Hackathon 2026**
