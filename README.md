@@ -26,55 +26,62 @@ This **AIoT Command Center** transitions predictive maintenance from a luxury fo
 
 Our system employs a **Defense-in-Depth** architecture, combining three independent AI methods to ensure no failure goes undetected.
 
-### 1. Advanced Feature Engineering (The SME Resilience Engine)
+### 1. Advanced Feature Engineering
 Industrial IoT data is inherently noisy. To handle this, we implemented:
-*   **Temporal Momentum (EMA):** Uses Exponential Moving Averages to capture machine momentum, reacting faster to sudden sensor spikes than standard rolling means.
-*   **Multi-Scale Volatility:** Tracks standard deviation and ranges across multiple time windows (10 and 30 cycles) to identify increasing vibration or heat fluctuations.
-*   **Robust Imputation:** Uses a time-series-aware Forward-Fill/Backward-Fill strategy to maintain context even if a sensor temporarily drops out.
+*   **Temporal Momentum (EMA):** Captures machine momentum, reacting faster to sudden sensor spikes.
+*   **Multi-Scale Volatility:** Tracks fluctuations across 10 and 30 cycle windows to identify increasing vibrations.
+*   **Robust Imputation:** Time-series-aware strategy to maintain context during sensor dropouts.
 
 ### 2. High-Dependability ML Core
-The system utilizes a **HistGradientBoostingRegressor** with **Sample Weighting**. 
-*   **The Logic:** We penalize errors more heavily as the machine approaches end-of-life. 
-*   **The Result:** The model is mathematically "forced" to be most accurate during the critical failure phase (0-30 cycles left).
+Utilizes a **HistGradientBoostingRegressor** with **Sample Weighting** to prioritize accuracy during the critical failure phase (0-30 cycles left).
 
-### 3. Anomaly Change-Point Detection (The Fail-Safe)
-Independent of the countdown timer, we use the **Pelt Algorithm** (via the `ruptures` library) to monitor the "state" of the machine.
-*   It identifies the exact moment a machine's behavior shifts from "Healthy" to "Impaired."
-*   If this shift occurs, the system triggers a **State-Change Alert**, providing a secondary layer of protection regardless of the predicted RUL number.
-
----
-
-## 🛡️ Risk Management: Mitigating "Dangerous Errors"
-
-In predictive maintenance, a "Dangerous Error" occurs when the AI is too optimistic. Our system uses three layers of defense to ensure these errors never lead to disaster:
-
-1.  **Dynamic Update Convergence:** Predictions are not static. Because the AI re-evaluates the machine every cycle, an optimistic error today is corrected tomorrow as the sensor data becomes more "violent" near failure. 
-2.  **State-Override Alert:** Even if the RUL countdown says "50 cycles left," the Anomaly Detection module (Brain B) will flip the machine to **"🔴 IMPAIRED"** the moment a change-point is detected, overriding any optimistic numbers.
-3.  **Human-in-the-Loop (XAI):** By providing SHAP waterfall plots, we allow human technicians to see *why* the AI is predicting health. If sensors are spiking but the number is high, the technician can manually intervene using the **Developer Control Room**.
+### 3. Anomaly Change-Point Detection
+Uses the **Pelt Algorithm** to monitor machine behavior independently of the countdown, identifying the exact moment a machine transitions to an "Impaired" state.
 
 ---
 
 ## 📊 Performance & Reliability Audit
 
-The system has been subjected to rigorous multi-phase testing against the NASA C-MAPSS dataset.
+The following results are derived from the latest rigorous testing against the NASA C-MAPSS industrial dataset.
 
-### 1. Algorithmic Stability Benchmark (5-Trial Summary)
-| Trial | RMSE | MAE | R² Score | System F1 | Dangerous Errors |
+### 1. Algorithmic Stability Benchmark (Raw AI)
+*Measures raw mathematical intelligence across 5 trials with different data initializations.*
+| Trial | RMSE | MAE | R² Score | Bias | System F1 | Dangerous Errors |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | 18.50 | 13.04 | 0.8018 | -0.12 | 0.9111 | 13 |
+| 2 | 18.41 | 13.07 | 0.8037 | +0.29 | 0.9319 | 14 |
+| 3 | 18.25 | 13.02 | 0.8070 | +0.46 | 0.9200 | 13 |
+| 4 | 18.22 | 12.72 | 0.8077 | -0.03 | 0.9309 | 12 |
+| 5 | 18.66 | 13.16 | 0.7983 | +0.14 | 0.9200 | 14 |
+| **AVG** | **18.41** | **13.00** | **0.8037** | **+0.15** | **0.9228** | **13.2** |
+
+### 2. Safe Production Stability Benchmark (With Buffer)
+*Measures the stability of the final deployed system with the -5 cycle safety buffer enabled.*
+| Trial | RMSE | MAE | Bias | System F1 | Dangerous Errors |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| 1 | 18.50 | 13.04 | 0.8018 | 0.9111 | 13 |
-| 2 | 18.41 | 13.07 | 0.8037 | 0.9319 | 14 |
-| 3 | 18.25 | 13.02 | 0.8070 | 0.9200 | 13 |
-| 4 | 18.22 | 12.72 | 0.8077 | 0.9309 | 12 |
-| 5 | 18.66 | 13.16 | 0.7983 | 0.9200 | 14 |
-| **AVERAGE** | **18.41** | **13.00** | **0.8037** | **0.9228** | **13.2** |
+| 1 | 19.21 | 13.94 | -5.10 | 0.9123 | 8 |
+| 2 | 19.01 | 13.65 | -4.68 | 0.9123 | 8 |
+| 3 | 18.83 | 13.47 | -4.49 | 0.9034 | 8 |
+| 4 | 18.92 | 13.62 | -4.98 | 0.9109 | 7 |
+| 5 | 19.31 | 13.96 | -4.83 | 0.9223 | 7 |
+| **AVG** | **19.06** | **13.73** | **-4.82** | **0.9122** | **7.6** |
 
-### 2. Consolidated Reliability Report (Production Model)
-| Category | Theoretical Max | Safe Production | Status |
+### 3. Consolidated Reliability Report
+| Category | Theoretical Max (Raw) | Safe Production (Buffer) | Status |
 | :--- | :---: | :---: | :--- |
-| **Statistical RMSE** | **18.41** | 19.21 | ✅ Optimized |
-| **System F1-Score** | **0.9228** | **0.9123** | 🚀 Elite |
-| **Dangerous Errors** | 13.2 Units | **8 Units** | 🛡️ **Ultra-Safe** |
-| **Critical Catch (Recall)**| 85% | **92%** | 🛠️ High Reliability |
+| **Statistical RMSE** | 18.41 | 19.06 | ✅ Balanced |
+| **System F1-Score** | 0.9228 | **0.9122** | 🚀 Elite Triage |
+| **Mean Bias** | +0.15 (Neutral) | **-4.82 (Pessimistic)** | 🛡️ **Fail-Safe** |
+| **Dangerous Errors** | 13.2 Units | **7.6 Units** | ✅ Target Met (<10) |
+| **Critical Recall** | 85% | **92%** | 🛠️ High Reliability |
+
+---
+
+## 🧠 Final Analysis of Results
+
+*   **Reliability through Consistency:** The average **System F1-Score of 0.9122** proves that the AI correctly triages 91% of the fleet into the correct health categories (Healthy vs. Warning vs. Critical).
+*   **The Safety Advantage:** By moving to the Production version, we successfully **reduced Dangerous Errors by 42%** (13.2 down to 7.6). This shift from a neutral bias (+0.15) to a pessimistic bias (-4.82) ensures that factory managers are warned before failures occur.
+*   **High-Stakes Precision:** With a **92% Recall for Critical Assets**, the system is highly dependable for catching machines nearing end-of-life, providing SMEs with the resilience to maintain continuous operations.
 
 ---
 
@@ -86,7 +93,6 @@ pip install -r requirements.txt
 ```
 
 ### 2. Run the AI Engine
-This script trains the model and generates the necessary analytical artifacts.
 ```bash
 python train_model.py
 ```
